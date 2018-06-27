@@ -13,36 +13,39 @@
 </head>
 
 <body>
-    <div class="container-fluid">
-        <div class="row">
-            <nav class="navbar navbar-inverse">
-                <div class="navbar-header">
-                    <div class="navbar-brand">
-                        <span class="nav-title">Neighborhood Map</span>
-                    </div>
-                </div>
 
-                <form class="navbar-form navbar-right" role="search">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search" name="q" data-bind="textInput: searchItem, valueUpdate: 'afterkeydown'">
-                        <div class="input-group-btn">
-                            <button class="btn btn-default">
-                                        <i class="glyphicon glyphicon-search"></i>
-                                    </button>
-                        </div>
-                    </div>
-                </form>
-        </div>
-        </nav>
-
-        <div>
-            <div class="sidenav" id="sidenav">
-                <div class="results" id="results" data-bind="foreach: mapList">
-                    <div class="list-group-item list-group-item-action" id="place" data-bind="text: title, click: show"></div>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <div class="navbar-brand">
+                    <span class="nav-title">Neighborhood Map</span>
                 </div>
             </div>
-            <div id="map"></div>
 
+            <form class="navbar-form navbar-right" role="search">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search" name="a" data-bind="textInput: searchItem, valueUpdate: 'afterkeydown'">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default">
+                                <i class="glyphicon glyphicon-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div id="navbarSupportedContent">
+                <div class="sidenav" id="sidenav">
+                    <div class="list-group" id="results" data-bind="foreach: mapList">
+                        <div class="list-group-item list-group-item-action" data-bind="text: title, click: show"></div>
+                    </div>
+                </div>
+
+                <div id="map"></div>
+            </div>
         </div>
     </div>
 

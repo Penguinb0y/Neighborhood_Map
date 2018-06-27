@@ -26,7 +26,7 @@ function googleMapsError() {
 }
 
 /*** Marker Model ***/
-var markerLocation = function (data) {
+var markerLocation = function(data) {
     var self = this;
 
     this.title = data.title;
@@ -41,7 +41,7 @@ var markerLocation = function (data) {
     });
 
     // set marker and extend bounds
-    self.filterMarkers = ko.computed(function () {
+    self.filterMarkers = ko.computed(function() {
         if (self.visible() === true) {
             self.marker.setMap(map);
             bounds.extend(self.marker.position);
@@ -52,33 +52,52 @@ var markerLocation = function (data) {
     });
 
     // Click to open a infoWindow at each marker
-    this.marker.addListener('click', function () {
+    this.marker.addListener('click', function() {
         populateInfoWindow(this, infoWindow);
         toggleBounce(this);
         map.panTo(this.getPosition());
     });
 
     // show item info when selected from list
-    this.show = function (location) {
+    this.show = function(location) {
         google.maps.event.trigger(self.marker, 'click');
     };
 
     // creates bounce effect when item selected
-    this.bounce = function (place) {
+    this.bounce = function(place) {
         google.maps.event.trigger(self.marker, 'click');
     };
 
 }
 
-var ViewModel = function () {
+var ViewModel = function() {
     var self = this;
+
+    this.searchItem = ko.observable('');
 
     this.mapList = ko.observableArray([]);
 
     // add location markers for each location
-    locations.forEach(function (location) {
+    locations.forEach(function(location) {
         self.mapList.push(new markerLocation(location));
     });
+
+    // locations viewed on map
+    this.mapList = ko.computed(function() {
+        var searchFilter = self.searchItem().toLowerCase();
+        if (searchFilter) {
+            return ko.utils.arrayFilter(self.mapList(), function(location) {
+                var str = location.title.toLowerCase();
+                var result = str.includes(searchFilter);
+                location.visible(result);
+                return result;
+            });
+        }
+        self.mapList().forEach(function(location) {
+            location.visible(true);
+        });
+        return self.mapList();
+    }, self);
 
 }
 
@@ -87,7 +106,7 @@ function toggleBounce(marker) {
         marker.setAnimation(null);
     } else {
         marker.setAnimation(google.maps.Animation.BOUNCE);
-        setTimeout(function () {
+        setTimeout(function() {
             marker.setAnimation(null);
         }, 1400);
     }
@@ -105,7 +124,7 @@ function populateInfoWindow(marker, infowindow) {
         infowindow.open(map, marker);
 
         // Make sure the marker property is cleared if the infowindow is closed.
-        infowindow.addListener('closeclick', function () {
+        infowindow.addListener('closeclick', function() {
             infowindow.setMarker = null;
         });
     }
