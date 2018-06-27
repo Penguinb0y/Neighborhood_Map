@@ -83,7 +83,7 @@ var ViewModel = function() {
     });
 
     // locations viewed on map
-    this.mapList = ko.computed(function() {
+    this.placesList = ko.computed(function() {
         var searchFilter = self.searchItem().toLowerCase();
         if (searchFilter) {
             return ko.utils.arrayFilter(self.mapList(), function(location) {
@@ -127,5 +127,7 @@ function populateInfoWindow(marker, infowindow) {
         infowindow.addListener('closeclick', function() {
             infowindow.setMarker = null;
         });
+        // Open the infowindow on the correct marker.
+        infowindow.open(map, marker);
     }
 }
