@@ -1,13 +1,15 @@
 # README
-Demo: penguinb0y.github.io
+Demo: https://penguinb0y.github.io/Neighborhood_Map/
 
-This project is a single page application of an interactive map of my neighborhood in the Bay Area including highlighted locations, third-party data about those locations and various ways to browse the content. Functionalities include: map markers to highlighted locations, a search function to easily discover these locations, and a listview to support simple browsing of all locations.
+This is a single page application of an interactive map of my neighborhood in the Bay Area by using the KnockoutJS framework, Google Maps API, and FourSquare API. Each location provides additional information and are loaded asynchronously organized with the MVVM layout. 
+
+Functionalities include: map markers to highlighted locations, a search function to easily discover these locations, and a listview to support simple browsing of all locations.
 
 ## Getting Started
 * Clone the repository
 * open ```index.html```
 &ensp; &ensp; &ensp; &ensp; (or)
-* Try the demo here: penguinb0y.github.io
+* Try the demo here: https://penguinb0y.github.io/Neighborhood_Map/
 ### Frameworks & Libraries
 * KnockoutJS
 * Bootstrap
