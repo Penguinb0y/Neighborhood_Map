@@ -1,39 +1,32 @@
  html,
  body {
      font-family: Arial, Helvetica, sans-serif;
-     height: 100%;
      margin: 0;
      padding: 0;
  }
-
+ 
  #map {
-     height: 100%;
+     height: 91vh;
  }
-
+ 
  #main {
      transition: margin-left .5s;
      padding: 0;
      margin-left: 250px;
      margin-right: 0px;
  }
-
- .app {
-     width: 100%;
-     height: 100%;
-     display: flex;
- }
-
+ 
  .sidenav {
-     width: 130px;
+     width: 150px;
      position: fixed;
      z-index: 1;
-     top: 20px;
      left: 10px;
-     background: #eee;
      overflow-x: hidden;
-     padding: 8px 0;
+     padding: 8px;
+     background-color: black;
+     border-radius: 15px;
  }
-
+ 
  .sidenav a {
      padding: 6px 8px 6px 16px;
      text-decoration: none;
@@ -41,11 +34,7 @@
      color: #2196F3;
      display: block;
  }
-
- .sidenav a:hover {
-     color: #064579;
- }
-
+ 
  @media screen and (max-height: 450px) {
      .sidenav {
          padding-top: 15px;
@@ -54,15 +43,14 @@
          font-size: 18px;
      }
  }
-
+ 
  .closebtn {
      top: 0;
      right: 25px;
      font-size: 36px;
      margin-left: 50px;
  }
-
+ 
  .list-group-item {
-     margin: 0 5px;
      color: black;
  }
