@@ -8,8 +8,7 @@ Functionalities include: map markers to highlighted locations, a search function
 ## Getting Started
 * Clone the repository
 * open ```index.html```
-&ensp; &ensp; &ensp; &ensp; (or)
-* Try the demo here: https://penguinb0y.github.io/Neighborhood_Map/
+* Or Try the demo here: https://penguinb0y.github.io/Neighborhood_Map/
 ### Frameworks & Libraries
 * KnockoutJS
 * Bootstrap
