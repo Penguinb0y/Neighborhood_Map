@@ -51,17 +51,9 @@ var markerLocation = function (data) {
         }
     });
 
-    // Create an onclick even to open an indowindow at each marker
-    this.marker.addListener('click', function () {
-        populateInfoWindow(this, infoWindow);
-        toggleBounce(this);
-        map.panTo(this.getPosition());
-    });
-
     // Click to open a infoWindow at each marker
     this.marker.addListener('click', function () {
-        populateInfoWindow(this, self.street, self.city, self.phone, infoWindow);
-        toggleBounce(this);
+        populateInfoWindow(this, infoWindow);
         map.panTo(this.getPosition());
     });
 

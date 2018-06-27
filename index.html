@@ -16,6 +16,11 @@
 
     <div id="map"></div>
 
+    <div class="sidenav">
+        <div class="list-group" data-bind="foreach: mapList">
+            <a href="#" class="list-group-item list-group-item-action" data-bind="text: title, click: show"></a>
+        </div>
+    </div>
 
     <script src='js/lib/knockout-3.4.2.js'></script>
     <script src='js/data.js'></script>
