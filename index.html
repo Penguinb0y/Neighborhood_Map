@@ -21,18 +21,30 @@
                         <span class="nav-title">Neighborhood Map</span>
                     </div>
                 </div>
-            </nav>
 
-            <div>
-                <div class="sidenav" id="sidenav">
-                    <div class="results" id="results" data-bind="foreach: mapList">
-                        <div class="list-group-item list-group-item-action" id="place" data-bind="text: title, click: show"></div>
+                <form class="navbar-form navbar-right" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q" data-bind="textInput: searchItem, valueUpdate: 'afterkeydown'">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default">
+                                        <i class="glyphicon glyphicon-search"></i>
+                                    </button>
+                        </div>
                     </div>
-                </div>
-                <div id="map"></div>
-
-            </div>
+                </form>
         </div>
+        </nav>
+
+        <div>
+            <div class="sidenav" id="sidenav">
+                <div class="results" id="results" data-bind="foreach: mapList">
+                    <div class="list-group-item list-group-item-action" id="place" data-bind="text: title, click: show"></div>
+                </div>
+            </div>
+            <div id="map"></div>
+
+        </div>
+    </div>
 
     </div>
     </div>
