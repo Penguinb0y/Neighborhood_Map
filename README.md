@@ -26,6 +26,7 @@ This project is a single page application of an interactive map of my neighborho
 * http://learn.knockoutjs.com/
 ### Bootstrap
 * https://getbootstrap.com/docs/4.1/getting-started/introduction/
+* https://www.w3schools.com/howto/howto_css_fixed_sidebar.asp
 ### Google Maps API
 * https://google-developers.appspot.com/maps/documentation/utils/geocoder/
 * https://developers.google.com/maps/documentation/javascript/tutorial

@@ -13,30 +13,31 @@
 </head>
 
 <body>
-    <div class="row">
-        <nav class="navbar navbar-inverse">
-            <div class="navbar-header">
-                <div class="navbar-brand">
-                    <span class="nav-title">Neighborhood Map</span>
-                </div>
-            </div>
-        </nav>
-    </div>
-
-
-    <main class="container-fluid">
+    <div class="container">
         <div class="row">
-            <div id="map"></div>
-
-            <aside class="col-md-3 col-md-offset-9 collapsed in" id="navbarSupportedContent">
-                <div class="sidenav">
-                    <div class="list-group" data-bind="foreach: mapList">
-                        <a href="#" class="list-group-item list-group-item-action" data-bind="text: title, click: show"></a>
+            <nav class="navbar navbar-inverse">
+                <div class="navbar-header">
+                    <div class="navbar-brand">
+                        <span class="nav-title">Neighborhood Map</span>
                     </div>
                 </div>
-            </aside>
+            </nav>
+
+            8
+            <div class="app" id="app">
+                <div class="sidenav" id="sidenav">
+                    <div class="results" id="results" data-bind="foreach: mapList">
+                        <div class="list-group-item list-group-item-action" id="place" data-bind="text: title, click: show"></div>
+                    </div>
+                </div>
+            </div>
+
         </div>
-    </main>
+    </div>
+
+    <div id="map"></div>
+    </div>
+
 
     <script src='js/lib/knockout-3.4.2.js'></script>
     <script src='js/data.js'></script>
