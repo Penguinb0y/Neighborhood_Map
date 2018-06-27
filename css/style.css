@@ -9,13 +9,6 @@
      height: 92vh;
  }
  
- #main {
-     transition: margin-left .5s;
-     padding: 0;
-     margin-left: 250px;
-     margin-right: 0px;
- }
- 
  .navbar {
      position: relative;
      min-height: 50px;
@@ -49,13 +42,6 @@
      .sidenav a {
          font-size: 18px;
      }
- }
- 
- .closebtn {
-     top: 0;
-     right: 25px;
-     font-size: 36px;
-     margin-left: 50px;
  }
  
  .list-group-item {

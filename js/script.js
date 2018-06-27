@@ -31,7 +31,26 @@ var markerLocation = function(data) {
 
     this.title = data.title;
     this.position = data.location;
+    this.street = '',
+        this.city = '',
+        this.phone = '';
+
     this.visible = ko.observable(true);
+
+    var clientID = 'MLLHNQX2QHJG41QTYQNFH0I1CJHWWSXYXPU4KFIWWQYNLVYF';
+    var clientSecret = '1ZQJ3GQBHVOYUU24MNQJFLS0YNNIE5KKCC1ILFATGLUNYCSJ';
+
+    // get JSON request of foursquare data
+    var reqURL = 'https://api.foursquare.com/v2/venues/search?ll=' + this.position.lat + ',' + this.position.lng + '&client_id=' + clientID + '&client_secret=' + clientSecret + '&v=20160118' + '&query=' + this.title;
+
+    $.getJSON(reqURL).done(function(data) {
+        var results = data.response.venues[0];
+        self.street = results.location.formattedAddress[0] ? results.location.formattedAddress[0] : 'N/A';
+        self.city = results.location.formattedAddress[1] ? results.location.formattedAddress[1] : 'N/A';
+        self.phone = results.contact.formattedPhone ? results.contact.formattedPhone : 'N/A';
+    }).fail(function() {
+        alert('Error, something went wrong with foursquare');
+    });
 
     // Create a marker per location, and put into markers array
     this.marker = new google.maps.Marker({
@@ -53,7 +72,7 @@ var markerLocation = function(data) {
 
     // Click to open a infoWindow at each marker
     this.marker.addListener('click', function() {
-        populateInfoWindow(this, infoWindow);
+        populateInfoWindow(this, self.street, self.city, self.phone, infoWindow);
         toggleBounce(this);
         map.panTo(this.getPosition());
     });
@@ -116,11 +135,15 @@ function toggleBounce(marker) {
 // This function populates the infowindow when the marker is clicked. We'll only allow
 // one infowindow which will open at the marker that is clicked, and populate based
 // on that markers position.
-function populateInfoWindow(marker, infowindow) {
+function populateInfoWindow(marker, street, city, phone, infowindow) {
     // Check to make sure the infowindow is not already opened on this marker.
     if (infowindow.marker != marker) {
         infowindow.marker = marker;
-        infowindow.setContent('<div>' + marker.title + '</div>');
+
+        var windowContent = '<h4>' + marker.title + '</h4>' +
+            '<p>' + street + "<br>" + city + '<br>' + phone + "</p>";
+
+        infowindow.setContent(windowContent);
         infowindow.open(map, marker);
 
         // Make sure the marker property is cleared if the infowindow is closed.
