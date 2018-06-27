@@ -3,7 +3,7 @@ var map;
 var infoWindow;
 var bounds;
 
-// init google maps
+/*** Model ***/
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: {
@@ -37,18 +37,38 @@ var markerLocation = function (data) {
     this.marker = new google.maps.Marker({
         position: this.position,
         title: this.title,
-        animation: google.maps.Animation.DROP
+        animation: google.maps.Animation.DROP,
     });
 
-    // set marker and extend bounds (showListings)
-    this.marker.setMap(map);
-    bounds.extend(this.marker.position);
-    map.fitBounds(bounds);
+    // set marker and extend bounds
+    self.filterMarkers = ko.computed(function () {
+        if (self.visible() === true) {
+            self.marker.setMap(map);
+            bounds.extend(self.marker.position);
+            map.fitBounds(bounds);
+        } else {
+            self.marker.setMap(null);
+        }
+    });
+
+    // Create an onclick even to open an indowindow at each marker
+    this.marker.addListener('click', function () {
+        populateInfoWindow(this, infoWindow);
+        toggleBounce(this);
+        map.panTo(this.getPosition());
+    });
 
     // Click to open a infoWindow at each marker
     this.marker.addListener('click', function () {
-        populateInfoWindow(self, infoWindow);
+        populateInfoWindow(this, self.street, self.city, self.phone, infoWindow);
+        toggleBounce(this);
+        map.panTo(this.getPosition());
     });
+
+    // show item info when selected from list
+    this.show = function (location) {
+        google.maps.event.trigger(self.marker, 'click');
+    };
 
     // creates bounce effect when item selected
     this.bounce = function (place) {
@@ -57,11 +77,12 @@ var markerLocation = function (data) {
 
 }
 
-function ViewModel() {
+var ViewModel = function () {
     var self = this;
 
     this.mapList = ko.observableArray([]);
 
+    // add location markers for each location
     locations.forEach(function (location) {
         self.mapList.push(new markerLocation(location));
     });
