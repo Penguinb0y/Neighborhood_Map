@@ -3,8 +3,6 @@ var map;
 var infoWindow;
 var bounds;
 
-var markers = [];
-
 // init google maps
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
@@ -19,35 +17,7 @@ function initMap() {
     infoWindow = new google.maps.InfoWindow();
     bounds = new google.maps.LatLngBounds();
 
-    //ko.applyBindings(new ViewModel());
-
-    // The following group uses the location array to create an array of markers on initialize.
-    for (var i = 0; i < locations.length; i++) {
-        // Get the position from the location array.
-        var position = locations[i].location;
-        var title = locations[i].title;
-
-        // Create a marker per location, and put into markers array.
-        var marker = new google.maps.Marker({
-            map: map,
-            position: position,
-            title: title,
-            animation: google.maps.Animation.DROP,
-            id: i
-        });
-
-        // Push the marker to our array of markers.
-        markers.push(marker);
-
-        // Create an onclick event to open an infowindow at each marker.
-        marker.addListener('click', function() {
-            populateInfoWindow(this, infoWindow);
-        });
-        bounds.extend(markers[i].position);
-    }
-
-    // Extend the boundaries of the map for each marker
-    map.fitBounds(bounds);
+    ko.applyBindings(new ViewModel());
 }
 
 // handle map error
@@ -55,10 +25,54 @@ function googleMapsError() {
     alert('An error occurred with Google Maps!');
 }
 
+/*** Marker Model ***/
+var markerLocation = function (data) {
+    var self = this;
+
+    this.title = data.title;
+    this.position = data.location;
+    this.visible = ko.observable(true);
+
+    // Create a marker per location, and put into markers array
+    this.marker = new google.maps.Marker({
+        position: this.position,
+        title: this.title,
+        animation: google.maps.Animation.DROP
+    });
+
+    // set marker and extend bounds (showListings)
+    this.marker.setMap(map);
+    bounds.extend(this.marker.position);
+    map.fitBounds(bounds);
+
+    // Click to open a infoWindow at each marker
+    this.marker.addListener('click', function () {
+        populateInfoWindow(self, infoWindow);
+    });
+
+    // creates bounce effect when item selected
+    this.bounce = function (place) {
+        google.maps.event.trigger(self.marker, 'click');
+    };
+
+}
+
+function ViewModel() {
+    var self = this;
+
+    this.mapList = ko.observableArray([]);
+
+    locations.forEach(function (location) {
+        self.mapList.push(new markerLocation(location));
+    });
+
+}
+
+
+
 // This function populates the infowindow when the marker is clicked. We'll only allow
 // one infowindow which will open at the marker that is clicked, and populate based
 // on that markers position.
-
 function populateInfoWindow(marker, infowindow) {
     // Check to make sure the infowindow is not already opened on this marker.
     if (infowindow.marker != marker) {
@@ -67,21 +81,8 @@ function populateInfoWindow(marker, infowindow) {
         infowindow.open(map, marker);
 
         // Make sure the marker property is cleared if the infowindow is closed.
-        infowindow.addListener('closeclick', function() {
+        infowindow.addListener('closeclick', function () {
             infowindow.setMarker = null;
         });
     }
 }
-
-/* 
-function toggleBounce(marker) {
-    if (marker.getAnimation() !== null) {
-        marker.setAnimation(null);
-    } else {
-        marker.setAnimation(google.maps.Animation.BOUNCE);
-        setTimeout(function() {
-            marker.setAnimation(null);
-        }, 1400);
-    }
-}
-*/
