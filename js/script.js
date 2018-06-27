@@ -54,6 +54,7 @@ var markerLocation = function (data) {
     // Click to open a infoWindow at each marker
     this.marker.addListener('click', function () {
         populateInfoWindow(this, infoWindow);
+        toggleBounce(this);
         map.panTo(this.getPosition());
     });
 
@@ -81,6 +82,16 @@ var ViewModel = function () {
 
 }
 
+function toggleBounce(marker) {
+    if (marker.getAnimation() !== null) {
+        marker.setAnimation(null);
+    } else {
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+        setTimeout(function () {
+            marker.setAnimation(null);
+        }, 1400);
+    }
+}
 
 
 // This function populates the infowindow when the marker is clicked. We'll only allow
