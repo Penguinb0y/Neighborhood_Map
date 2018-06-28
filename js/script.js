@@ -81,12 +81,6 @@ var markerLocation = function(data) {
     this.show = function(location) {
         google.maps.event.trigger(self.marker, 'click');
     };
-
-    // creates bounce effect when item selected
-    this.bounce = function(place) {
-        google.maps.event.trigger(self.marker, 'click');
-    };
-
 }
 
 var ViewModel = function() {
@@ -150,7 +144,5 @@ function populateInfoWindow(marker, street, city, phone, infowindow) {
         infowindow.addListener('closeclick', function() {
             infowindow.setMarker = null;
         });
-        // Open the infowindow on the correct marker.
-        infowindow.open(map, marker);
     }
 }
